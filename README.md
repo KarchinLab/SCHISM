@@ -1,2 +1,2 @@
-# SCHISM-sandbox
-Subclonal Hierarchy Inference from Somatic Mutations
+SCHISM is a computational tool designed to infer subclonal hierarchy from somatic mutations.
+
