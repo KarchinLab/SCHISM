@@ -8,7 +8,7 @@ setup(
     packages=['SCHISM'],
     scripts=['runSchism'],
     package_data={'':['*.yaml']},
-    url='http://www.karchinlab.org/',
+    url='http://www.karchinlab.org/apps/appSchism.html',
     license='LICENSE.txt',
     description='SCHISM: Subclonal Hierarchy Inference from Somatic Mutations',
     long_description='\n' + open('README.txt').read(),
