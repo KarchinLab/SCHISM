@@ -25,9 +25,10 @@ divergence rule explores the space of tree topologies and returns a prioritized 
 Links
 ===========
 
-Please consult the SCHISM wiki page () for installation guide, software tutorial, and 
+Please consult the SCHISM wiki page for installation guide, software tutorial, and 
 usage examples.
 
+https://github.com/Niknafs/SCHISM/wiki
 
 Releases
 ===========
