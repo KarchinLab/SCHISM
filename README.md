@@ -11,7 +11,7 @@ Next, an implementation of genetic algorithm (GA) based on a fitness function th
 ## Links
 * [Installation](https://github.com/Niknafs/SCHISM/wiki/Installation)
 * [Tutorial](https://github.com/Niknafs/SCHISM/wiki/Tutorial)
-* [Usage Example](https://github.com/Niknafs/SCHISM/wiki/Usage-Examples)
+* [Usage Examples](https://github.com/Niknafs/SCHISM/wiki/Usage-Examples)
 
 ## Releases 
 
