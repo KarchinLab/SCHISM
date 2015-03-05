@@ -1,0 +1,49 @@
+# Example SCHISM configuration file
+
+#-------------------Path Specifications-------------------#
+# Path to  working directory where input files are located.
+# This path will be used as the base for relative paths
+# elsewhere in this file. Please configure accordingly.
+
+working_dir: ~/SCHISM/example/Test
+
+mutation_to_cluster_assignment: mutation_to_cluster.tsv
+
+# If using SCHISM for cellularity estimation
+mutation_raw_input: test.mutationReadsCNA.tsv
+
+# If using external tools for cellularity estimation, 
+# SCHISM needs the input below
+# mutation_cellularity_input: test.mutationCellularities.tsv
+
+output_prefix: test
+
+#-----------Mutation Cellularity Estimation---------------#
+cellularity_estimation: schism
+
+# only necessary if using SCHISM to estimte cellularity
+cellularity_estimator:
+  coverage_threshold: 50.0
+  absent_mode: 1
+
+# only necessary if using SCHISM to estimte cellularity
+tumor_sample_purity:
+  REL: 0.845
+  TUM: 0.937
+
+#---------------------Hypothesis Test---------------------#
+hypothesis_test:
+  test_level: clusters
+  significance_level: 0.05
+  store_pvalues: True
+
+#---------------------Genetic Algorithm-------------------#
+genetic_algorithm:
+  instance_count: 10
+  generation_count: 10
+  generation_size: 100
+  random_object_fraction: 0.2
+  mutation_probability: 0.9
+  crossover_probability: 0.25
+  fitness_coefficient: 5.0
+  verbose: True

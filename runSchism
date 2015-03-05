@@ -1,0 +1,112 @@
+#!/usr/bin/env python
+#=========================================================================#
+import os
+import sys
+import yaml
+
+from argparse import ArgumentParser as argument_parser
+
+import SCHISM
+__version__ = SCHISM.__version__
+
+from SCHISM.HT import prep_hypothesis_test
+from SCHISM.HT import hypothesis_test
+
+from SCHISM.GA import run_ga
+from SCHISM.GA import ga_summary
+from SCHISM.GA import generate_consensus_tree
+
+from SCHISM.visualize import plot_cpov
+#--------------------------------------------------------------------#
+class CMDParser():
+    # command line parser
+    usage  = '\n python schism.py --help\n'
+
+    def __init__(self):
+        parser = argument_parser(description = CMDParser.usage)
+        
+        parser.add_argument('--version',action ='version', version=__version__)
+
+        subparsers = parser.add_subparsers(dest = 'task',\
+                                           title = 'analysis_type',\
+                                           help = 'SCHISM analysis type')
+        
+        # runner script executing steps in sequence
+        #----------------------------------------------------#
+        runner_parser = subparsers.add_parser('analyze',\
+                                        help = 'run schism analysis steps in sequence')
+        runner_parser.add_argument('-c','--config_file',\
+                                   help = 'path to SCHISM configuration file')
+        runner_parser.set_defaults(func = run_schism)
+
+        # task specific subparsers
+        #----------------------------------------------------#
+        pht_parser = subparsers.add_parser('prepare_for_hypothesis_test',\
+                                           help = 'prepare cellularity input for hypothesis test')
+        pht_parser.add_argument('-c','--config_file',\
+                        help = 'path to SCHISM configuration file')
+        pht_parser.set_defaults(func = prep_hypothesis_test)
+        #----------------------------------------------------#
+        ht_parser = subparsers.add_parser('hypothesis_test',\
+                                          help = 'Perform SCHISM hypothesis test')
+        ht_parser.add_argument('-c','--config_file',\
+                        help = 'path to SCHISM configuration file')
+        ht_parser.set_defaults(func = hypothesis_test)
+        #----------------------------------------------------#
+        viz_parser = subparsers.add_parser('plot_cpov',\
+                         help = 'plot CPOV heatmap')
+        viz_parser.add_argument('-c','--config_file',\
+                        help = 'path to SCHISM configuration file')
+        viz_parser.set_defaults(func = plot_cpov)
+        #----------------------------------------------------#
+        ga_parser = subparsers.add_parser('run_ga',\
+                        help = 'run genetic algorithm')
+        ga_parser.add_argument('-m', '--mode',type= str,\
+                               help = 'GA run mode: serial or parallel')
+        ga_parser.add_argument('-r', '--runID',type= int,\
+                               help = 'GA run id to run')
+        ga_parser.add_argument('-c','--config_file',\
+                        help = 'path to SCHISM configuration file')
+        ga_parser.set_defaults(func = run_ga)
+        #----------------------------------------------------#
+        ga_summary_parser = subparsers.add_parser('summarize_ga_results',\
+                                       help='generate summary ga table and plots')
+        ga_summary_parser.add_argument('-c','--config_file',\
+                        help = 'path to SCHISM configuration file')
+        ga_summary_parser.set_defaults(func = ga_summary)
+        #----------------------------------------------------#
+        ct_parser = subparsers.add_parser('consensus_tree',\
+                        help = 'construct and plot consensus tree from the fittest')
+        ct_parser.add_argument('-c','--config_file',\
+                        help = 'path to SCHISM configuration file')
+        ct_parser.set_defaults(func = generate_consensus_tree)
+        #----------------------------------------------------#
+        args = parser.parse_args()
+        self.__dict__.update(args.__dict__)
+        return
+#--------------------------------------------------------------------#
+def run_schism(args):
+    print >>sys.stderr, 'Preparing hypothesis test input...'
+    prep_hypothesis_test(args)
+    print >>sys.stderr, 'Performing hypothesis input...'
+    hypothesis_test(args)
+    print >>sys.stderr, 'Visualizing test results...'
+    plot_cpov(args)
+    args.mode = 'serial'
+    print >>sys.stderr, 'Performing independent runs of' + \
+                        ' genetic algorithm in serial mode ...'
+    run_ga(args)
+    print >>sys.stderr, 'Merging results from independent GA runs' +\
+                        ' and generating summary plots...'
+    ga_summary(args)
+    print >>sys.stderr, 'generating the consensus of maximum fitness trees'
+    generate_consensus_tree(args)
+#--------------------------------------------------------------------#
+def main():
+    # call the appropriate function to carry out the selected task
+    args = CMDParser()
+    args.func(args)
+
+if __name__ == '__main__':
+    main()
+
