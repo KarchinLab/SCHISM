@@ -9,9 +9,9 @@ First, SCHISM combines information about somatic mutation cellularity (aka mutat
 Next, an implementation of genetic algorithm (GA) based on a fitness function that incorporates considerations for both lineage precedence (CPOV) rule and lineage divergence rule explores the space of tree topologies and returns a prioritized list of candidate subclonal phylogenetic trees, most compatible with observed cellularity data. 
 
 ## Links
-* [Installation](https://github.com/Niknafs/SCHISM-sandbox/wiki/Installation)
-* [Tutorial](https://github.com/Niknafs/SCHISM-sandbox/wiki/Tutorial)
-* [Usage Example](https://github.com/Niknafs/SCHISM-sandbox/wiki/Usage-Example)
+* [Installation](https://github.com/Niknafs/SCHISM/wiki/Installation)
+* [Tutorial](https://github.com/Niknafs/SCHISM/wiki/Tutorial)
+* [Usage Example](https://github.com/Niknafs/SCHISM/wiki/Usage-Examples)
 
 ## Releases 
 
