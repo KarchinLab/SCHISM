@@ -100,7 +100,7 @@ def merge_ga_traces(args):
 
     for tree, metrics in allTrees:
         print >>f_w, '\t'.join([tree] + \
-                               map(lambda x:'%0.45'%x,metrics) +\
+                               map(lambda x:'%0.4f'%x,metrics) +\
                                [str(counts[tree])])
     f_w.close()
 #----------------------------------------------------------------------#
