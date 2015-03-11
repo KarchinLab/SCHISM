@@ -1,5 +1,5 @@
 import os
-
+import sys
 import numpy as np
 
 from utils import Config
@@ -14,7 +14,7 @@ def plot_cpov(args):
             'Plotting consensus tree requires matplotlib \n' +\
             'module. Failed to import matplotlib. Please install \n'+\
             'matplotlib package and try again'
-        sys.exit()
+        return
 
     config = Config(args.config_file)
     cpovPath = os.path.join(config.working_dir,\
@@ -94,7 +94,7 @@ def plot_ga_fitness_trace(args):
             'Plotting consensus tree requires matplotlib \n' +\
             'module. Failed to import matplotlib. Please install \n'+\
             'matplotlib package and try again'
-        sys.exit()
+        return
     
     config = Config(args.config_file)
     Range = range(1, 1 + config.genetic_algorithm['instance_count'])
@@ -105,6 +105,11 @@ def plot_ga_fitness_trace(args):
     ncol = 4
     
     fig, axs = plt.subplots(nrow, ncol)
+    
+    # correct dimensions to allow consistent downstream steps
+    if nrow == 1:
+        axs = [axs]
+
     axs_ = [element for row in axs for element in row]
 
     for index, runID in enumerate(Range):
@@ -148,7 +153,7 @@ def plot_ga_top_tree_count_trace(args):
             'Plotting consensus tree requires matplotlib \n' +\
             'module. Failed to import matplotlib. Please install \n'+\
             'matplotlib package and try again'
-        sys.exit()
+        return
 
     config = Config(args.config_file)
     Range = range(1, 1 + config.genetic_algorithm['instance_count'])
@@ -162,6 +167,11 @@ def plot_ga_top_tree_count_trace(args):
     ncol = 4
     
     fig, axs = plt.subplots(nrow, ncol)
+
+    # correct dimensions to allow consistent downstream steps    
+    if nrow == 1:
+        axs = [axs]
+
     axs_ = [element for row in axs for element in row]
 
     for index, runID in enumerate(Range):
@@ -211,10 +221,10 @@ def plot_consensus_tree(args):
         import igraph
     except ImportError:
         print >>sys.stderr, \
-            'Plotting consensus tree requires python igraph \n' +\
+            'Plotting consensus tree requires python-igraph \n' +\
             'module. Failed to import igraph. Please install \n'+\
             'python-igraph package and try again'
-        sys.exit
+        return
 
     config = Config(args.config_file)
     cTreePath = os.path.join(config.working_dir,\
@@ -256,8 +266,17 @@ def plot_consensus_tree(args):
     visual_style["edge_labels"] = labels
     visual_style["vertex_size"] = 30
     visual_style['layout'] = layout
-        
-    igraph.plot(g, cTreeGraphPath, **visual_style)
+
+    try:
+        igraph.plot(g, cTreeGraphPath, **visual_style)
+    except TypeError:
+        print >>sys.stderr, \
+            'Plotting consensus tree requires Cairo library \n' +\
+            'and Pycairo to support python-graph. \n' + \
+            'Dependencies missing. Please install \n'+\
+            'Cairo and PyCairo package and try again\n' +\
+            '(guide available: https://gist.github.com/Niknafs/6b50d9df9d5396a2e92e)\n'
+        return
 #----------------------------------------------------------------------#
 def read_cpov_matrix(path):
     # return cpov np.array and clusterIDs list

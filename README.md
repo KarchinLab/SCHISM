@@ -9,13 +9,13 @@ First, SCHISM combines information about somatic mutation cellularity (aka mutat
 Next, an implementation of genetic algorithm (GA) based on a fitness function that incorporates considerations for both lineage precedence (CPOV) rule and lineage divergence rule explores the space of tree topologies and returns a prioritized list of candidate subclonal phylogenetic trees, most compatible with observed cellularity data. 
 
 ## Links
-* [Installation](https://github.com/Niknafs/SCHISM/wiki/Installation)
-* [Tutorial](https://github.com/Niknafs/SCHISM/wiki/Tutorial)
-* [Usage Examples](https://github.com/Niknafs/SCHISM/wiki/Usage-Examples)
+* [Installation](Installation)
+* [Tutorial](Tutorial)
+* [Usage Examples](Usage-Examples)
 
 ## Releases 
 
-* SCHISM-0.0.0 2015-03-05    Initial release at the time of manuscript publication
+* SCHISM-1.0.0&nbsp;&nbsp;&nbsp;&nbsp;2015-03-10&nbsp;&nbsp;&nbsp;&nbsp;Initial release at the time of manuscript publication
 
 ## Citation
 
@@ -25,10 +25,16 @@ If you use SCHISM in your research, please cite:
 
 [to be substituted with journal url]
 ## Availability
-Stable releases of SCHISM are available from KarchinLab website at <http://karchinlab.org/apps/appSchism>
+Stable releases of SCHISM are available from KarchinLab website at 
+ * <http://karchinlab.org/apps/appSchism> 
+ * <https://github.com/Niknafs/SCHISM/releases>
 
-and also:
-https://github.com/Niknafs/SCHISM/releases
+## Platform
+
+Basic functionality of SCHISM scripts developed in python should be available across all platforms. 
+
+The plotting functionality of SCHISM relies on matplotlib, igraph c core and python-igraph. Matplotlib should run across all platforms. igraph dependencies (c core, and python-igraph), however, have been tested on Fedora and Ubuntu linux distributions only. An installation <a href="https://gist.github.com/Niknafs/6b50d9df9d5396a2e92e">guide</a> for igraph dependencies is available on the project wiki page. 
 
 ## Support
 Please contact the package developer Noushin Niknafs (niknafs at jhu dot edu) with suggestions, questions or bug reports.
+

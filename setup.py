@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='SCHISM',
-    version='0.0.0',
+    version='1.0.0',
     author='Noushin Niknafs',
     author_email='niknafs@jhu.edu',
     packages=['SCHISM'],
@@ -15,8 +15,6 @@ setup(
     install_requires=["numpy >= 1.7.1",\
                       "scipy >= 0.12.0",\
                       "PyYAML >= 3.11",\
-                      "python-igraph >= 0.7.0",\
                       "matplotlib >= 1.2.0"],
 )
-
 

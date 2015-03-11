@@ -32,11 +32,12 @@ https://github.com/Niknafs/SCHISM/wiki
 
 Releases
 ===========
-    SCHISM-0.0.0    2015-03-05    Initial release, concurrent with manuscript publication
+    SCHISM-1.0.0    2015-03-05    Initial release, concurrent with manuscript publication
 
 
 Citation
 ===========
+
 If you use SCHISM in your research, please cite:
 
     Niknafs et al. SubClonal Hierarchy Inference from Somatic Mutations: automatic 
@@ -51,6 +52,18 @@ Stable releases of SCHISM are available from KarchinLab website.
 http://karchinlab.org/apps/appSchism
 and also
 https://github.com/Niknafs/SCHISM/releases
+
+Platform
+===========
+
+Basic functionality of SCHISM scripts developed in python should be available across
+ all platforms. 
+
+The plotting functionality of SCHISM relies on matplotlib, igraph c core and 
+python-igraph. Matplotlib should run across all platforms. igraph dependencies (c core, 
+and python-igraph), however, have been tested on linux distributions Fedora and Ubuntu 
+only. An installation guide for igraph dependencies is available on the project wiki
+page. 
 
 
 Support
