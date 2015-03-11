@@ -15,7 +15,7 @@ Next, an implementation of genetic algorithm (GA) based on a fitness function th
 
 ## Releases 
 
-* SCHISM-1.0.0&nbsp;&nbsp;&nbsp;&nbsp;2015-03-10&nbsp;&nbsp;&nbsp;&nbsp;Initial release at the time of manuscript publication
+* SCHISM-1.0.0&nbsp;&nbsp;&nbsp;&nbsp;2015-03-10&nbsp;&nbsp;&nbsp;&nbsp;Initial release at the time of manuscript submission
 
 ## Citation
 
