@@ -21,7 +21,7 @@ Next, an implementation of genetic algorithm (GA) based on a fitness function th
 
 If you use SCHISM in your research, please cite:
 
-* Niknafs N, Beleva-Guthrie V, Naiman DQ, and Karchin R. SubClonal Hierarchy Inference from Somatic Mutations: automatic reconstruction of cancer evolutionary trees from multi-region next generation sequencing <http://biorxiv.org/content/early/2014/11/26/011833>
+* Niknafs N, Beleva-Guthrie V, Naiman DQ, and Karchin R. SubClonal Hierarchy Inference from Somatic Mutations: automatic reconstruction of cancer evolutionary trees from multi-region next generation sequencing <http://dx.plos.org/10.1371/journal.pcbi.1004416>
 
 [to be substituted with journal url]
 ## Availability
