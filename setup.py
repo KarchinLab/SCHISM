@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='SCHISM',
-    version='1.0.0',
+    version='1.0.1',
     author='Noushin Niknafs',
     author_email='niknafs@jhu.edu',
     packages=['SCHISM'],

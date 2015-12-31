@@ -1,1 +1,5 @@
-v0.0.0, 2014-03-05 --initial release
+v1.0.0, 2015-03-05 --initial release
+v1.0.1, 2015-12-31 --minor updates
+		     - matplotlib backend specification
+		     - updated citation in README.txt file
+		     
