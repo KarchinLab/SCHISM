@@ -7,6 +7,8 @@ from utils import Config
 def plot_cpov(args):
     
     try:
+        import matplotlib
+        matplotlib.use('Agg')
         import matplotlib.pyplot as plt
         from matplotlib.colors import LinearSegmentedColormap
     except ImportError:
@@ -87,6 +89,8 @@ def plot_cpov(args):
 def plot_ga_fitness_trace(args):
     # plot the GA trace corresponding to the run(s) specified
     try:
+        import matplotlib
+        matplotlib.use('Agg')
         import matplotlib.pyplot as plt
         from matplotlib.colors import LinearSegmentedColormap
     except ImportError:
@@ -146,6 +150,8 @@ def plot_ga_top_tree_count_trace(args):
     # population fitness after each generation
 
     try:
+        import matplotlib
+        matplotlib.use('Agg')
         import matplotlib.pyplot as plt
         from matplotlib.colors import LinearSegmentedColormap
     except ImportError:
