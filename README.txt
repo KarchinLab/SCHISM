@@ -33,7 +33,7 @@ https://github.com/Niknafs/SCHISM/wiki
 Releases
 ===========
     SCHISM-1.0.0    2015-03-05    Initial release, concurrent with manuscript publication
-
+    SCHISM-1.0.1    2016-01-01    Minor visualization update. Citation updated. 
 
 Citation
 ===========
