@@ -47,3 +47,40 @@ genetic_algorithm:
   crossover_probability: 0.25
   fitness_coefficient: 5.0
   verbose: True
+
+#---------------------Cluster Analysis--------------------#
+# Optional block, when mutation to cluster assignment is 
+# not known apriori. One of the follwing algorithm blocks
+# can be used
+
+# (A)
+clustering_method:
+  algorithm: AP
+  min_cluster_count: 1
+  max_cluster_count: 20
+  min_preference: -300
+  max_preference: 0
+  preference_increments: 5
+  verbose: False
+
+# (B)
+clustering_method:
+  algorithm: DBSCAN
+  min_cluster_count: 1
+  max_cluster_count: 20
+  min_eps: 0.1
+  max_eps: 10
+  eps_increments: 0.2
+  min_minPts: 1
+  max_minPts: 10
+  minPts_increments: 1
+  verbose: True
+
+# (C)
+clustering_method:
+  algorithm: KMeans
+  min_cluster_count: 1
+  max_cluster_count: 20
+  n_init: 10
+  verbose: True
+

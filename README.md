@@ -17,6 +17,7 @@ Next, an implementation of genetic algorithm (GA) based on a fitness function th
 
 * SCHISM-1.0.0&nbsp;&nbsp;&nbsp;&nbsp;2015-03-10&nbsp;&nbsp;&nbsp;&nbsp;Initial release at the time of manuscript submission
 * SCHISM-1.0.1&nbsp;&nbsp;&nbsp;&nbsp;2016-01-01&nbsp;&nbsp;&nbsp;&nbsp;Minor visualization update. Citation info updated.
+* SCHISM-1.1.0&nbsp;&nbsp;&nbsp;&nbsp;2016-01-26&nbsp;&nbsp;&nbsp;&nbsp;Mutation clustering module added.
 
 ## Citation
 

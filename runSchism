@@ -12,11 +12,16 @@ __version__ = SCHISM.__version__
 from SCHISM.HT import prep_hypothesis_test
 from SCHISM.HT import hypothesis_test
 
+from SCHISM.CL import cluster_muts
+from SCHISM.CL import integrate_cluster_metrics
+
 from SCHISM.GA import run_ga
 from SCHISM.GA import ga_summary
 from SCHISM.GA import generate_consensus_tree
 
 from SCHISM.visualize import plot_cpov
+
+from SCHISM.utils import Config
 #--------------------------------------------------------------------#
 class CMDParser():
     # command line parser
@@ -25,7 +30,7 @@ class CMDParser():
     def __init__(self):
         parser = argument_parser(description = CMDParser.usage)
         
-        parser.add_argument('--version',action ='version', version=__version__)
+        parser.add_argument('--version',action ='version', version='curr_dev')
 
         subparsers = parser.add_subparsers(dest = 'task',\
                                            title = 'analysis_type',\
@@ -52,6 +57,18 @@ class CMDParser():
         ht_parser.add_argument('-c','--config_file',\
                         help = 'path to SCHISM configuration file')
         ht_parser.set_defaults(func = hypothesis_test)
+        #----------------------------------------------------#
+        cl_parser = subparsers.add_parser('cluster_mutations',\
+                                           help = 'cluster mutations based on their hypothesis test results')
+        cl_parser.add_argument('-c','--config_file',\
+                        help = 'path to SCHISM configuration file')
+        cl_parser.set_defaults(func = cluster_muts)
+        #----------------------------------------------------#
+        icm_parser = subparsers.add_parser('confirm_clusters',\
+                                           help = 'integrate cluster metrics (cellularity, and HT) over confirmed cluster definitions')
+        icm_parser.add_argument('-c','--config_file',\
+                        help = 'path to SCHISM configuration file')
+        icm_parser.set_defaults(func = integrate_cluster_metrics)
         #----------------------------------------------------#
         viz_parser = subparsers.add_parser('plot_cpov',\
                          help = 'plot CPOV heatmap')
@@ -86,10 +103,19 @@ class CMDParser():
         return
 #--------------------------------------------------------------------#
 def run_schism(args):
+    config = Config(args.config_file)
+
     print >>sys.stderr, 'Preparing hypothesis test input...'
     prep_hypothesis_test(args)
     print >>sys.stderr, 'Performing hypothesis input...'
     hypothesis_test(args)
+
+    if config.cluster_analysis == 'schism':
+        print >>sys.stderr, 'clustering mutations...'
+        cluster_muts(args)
+        print >>sys.stderr, 'integrating cluster metrics ...'
+        integrate_cluster_metrics(args)
+
     print >>sys.stderr, 'Visualizing test results...'
     plot_cpov(args)
     args.mode = 'serial'

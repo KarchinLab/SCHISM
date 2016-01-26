@@ -34,7 +34,7 @@ def prep_hypothesis_test(args):
     # generate mutation.cellularity
 
     # regardless of the cellularity estimator, generate
-    # cluster.cellularity
+    # cluster.cellularity if cluster definitions are known
 
     if config.cellularity_estimation == 'schism':
         mutationReadFile = os.path.join(config.working_dir,\
@@ -63,11 +63,14 @@ def prep_hypothesis_test(args):
                                   config.cellularity_estimator['coverage_threshold'],\
                                   config.cellularity_estimator['absent_mode'])
         
-        average_cellularity(config,clusterCellularityPath)
+        if config.cluster_analysis != 'schism':
+            average_cellularity(config,clusterCellularityPath)
     else:
+        
         clusterCellularityPath = os.path.join(config.working_dir,\
                                    config.output_prefix + '.cluster.cellularity')
-        average_cellularity(config,clusterCellularityPath)
+        if config.cluster_analaysis != 'schism':
+            average_cellularity(config,clusterCellularityPath)
 #----------------------------------------------------------------------#
 def average_cellularity(config, clusterCellularityPath):
     # read in mutation cellularities
@@ -192,7 +195,8 @@ def hypothesis_test(args):
                                 config.output_prefix + '.HT.pov')
         header = 'parent\tchild\trejection'
         hypothesisTest.store_decisions(header, decisionPath)
-        aggregate_votes(config)            
+        if config.cluster_analysis != 'schism':
+            aggregate_votes(config)            
     else:
         # HT on clusters
         decisionPath = os.path.join(config.working_dir,\
