@@ -16,6 +16,6 @@ setup(
                       "scipy >= 0.12.0",\
                       "PyYAML >= 3.11",\
                       "matplotlib >= 1.2.0",\
-                      "skearn >= 0.14.1"],
+                      "skearn"],
 )
 
