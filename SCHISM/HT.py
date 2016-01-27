@@ -63,13 +63,15 @@ def prep_hypothesis_test(args):
                                   config.cellularity_estimator['coverage_threshold'],\
                                   config.cellularity_estimator['absent_mode'])
         
-        if config.cluster_analysis != 'schism':
+        if (not(hasattr(config, 'cluster_analysis')))  or config.cluster_analysis != 'schism':
+            # assumes cluster definitions are provided by the user through config file
             average_cellularity(config,clusterCellularityPath)
     else:
         
         clusterCellularityPath = os.path.join(config.working_dir,\
                                    config.output_prefix + '.cluster.cellularity')
-        if config.cluster_analaysis != 'schism':
+        if (not(hasattr(config, 'cluster_analysis')))   or config.cluster_analaysis != 'schism':
+            # assumes cluster definitions are provided by the user through config file
             average_cellularity(config,clusterCellularityPath)
 #----------------------------------------------------------------------#
 def average_cellularity(config, clusterCellularityPath):
@@ -195,7 +197,7 @@ def hypothesis_test(args):
                                 config.output_prefix + '.HT.pov')
         header = 'parent\tchild\trejection'
         hypothesisTest.store_decisions(header, decisionPath)
-        if config.cluster_analysis != 'schism':
+        if (not(hasattr(config, 'cluster_analysis')))  or config.cluster_analysis != 'schism':
             aggregate_votes(config)            
     else:
         # HT on clusters

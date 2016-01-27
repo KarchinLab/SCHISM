@@ -110,7 +110,7 @@ def run_schism(args):
     print >>sys.stderr, 'Performing hypothesis input...'
     hypothesis_test(args)
 
-    if config.cluster_analysis == 'schism':
+    if hasattr(config, 'cluster_analysis') and config.cluster_analysis == 'schism':
         print >>sys.stderr, 'clustering mutations...'
         cluster_muts(args)
         print >>sys.stderr, 'integrating cluster metrics ...'
