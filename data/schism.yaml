@@ -53,9 +53,10 @@ genetic_algorithm:
 # not known apriori. One of the follwing algorithm (A, B, or C)
 # blocks can be used
 
+# required line for this setting
 cluster_analysis: schism
 
-# (A)
+# (Option A)
 clustering_method:
   algorithm: AP
   min_cluster_count: 1
@@ -65,7 +66,7 @@ clustering_method:
   preference_increments: 5
   verbose: False
 
-# (B)
+# (Option B)
 clustering_method:
   algorithm: DBSCAN
   min_cluster_count: 1
@@ -78,7 +79,7 @@ clustering_method:
   minPts_increments: 1
   verbose: True
 
-# (C)
+# (Option C)
 clustering_method:
   algorithm: KMeans
   min_cluster_count: 1
