@@ -50,8 +50,8 @@ genetic_algorithm:
 
 #---------------------Cluster Analysis--------------------#
 # Optional block, when mutation to cluster assignment is 
-# not known apriori. One of the follwing algorithm blocks
-# can be used
+# not known apriori. One of the follwing algorithm (A, B, or C)
+# blocks can be used
 
 cluster_analysis: schism
 
