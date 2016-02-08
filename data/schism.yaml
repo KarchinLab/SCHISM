@@ -40,8 +40,8 @@ hypothesis_test:
 #---------------------Genetic Algorithm-------------------#
 genetic_algorithm:
   instance_count: 10
-  generation_count: 10
-  generation_size: 100
+  generation_count: 20
+  generation_size: 1000
   random_object_fraction: 0.2
   mutation_probability: 0.9
   crossover_probability: 0.25
@@ -50,7 +50,7 @@ genetic_algorithm:
 
 #---------------------Cluster Analysis--------------------#
 # Optional block, when mutation to cluster assignment is 
-# not known apriori. One of the follwing algorithm (A, B, or C)
+# not known apriori. One of the following algorithm (A, B, or C)
 # blocks can be used
 
 # required line for this setting
