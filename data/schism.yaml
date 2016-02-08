@@ -33,7 +33,7 @@ tumor_sample_purity:
 
 #---------------------Hypothesis Test---------------------#
 hypothesis_test:
-  test_level: clusters
+  test_level: mutations
   significance_level: 0.05
   store_pvalues: True
 
