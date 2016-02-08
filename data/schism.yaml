@@ -32,6 +32,10 @@ tumor_sample_purity:
   TUM: 0.937
 
 #---------------------Hypothesis Test---------------------#
+# Hypothesis test module parameters. If schism is set to 
+# perform the cluster analysis, test_level should be set
+# to mutations.
+ 
 hypothesis_test:
   test_level: mutations
   significance_level: 0.05
