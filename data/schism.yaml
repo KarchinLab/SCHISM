@@ -7,17 +7,17 @@
 
 working_dir: ~/SCHISM/example/Test
 
-# If using external tools to cluster mutations, this will be a user-
-# specified input file. Otherwise, the output of cluster analysis by 
-# SCHISM will be written to this file.
-mutation_to_cluster_assignment: mutation_to_cluster.tsv
-
 # If using SCHISM for cellularity estimation
 mutation_raw_input: test.mutationReadsCNA.tsv
 
 # If using external tools for cellularity estimation, 
 # SCHISM needs the input below
 # mutation_cellularity_input: test.mutationCellularities.tsv
+
+# If using external tools to cluster mutations, this file will be a user-
+# specified input file. Otherwise, the output of cluster analysis by 
+# SCHISM will be written to this file.
+mutation_to_cluster_assignment: mutation_to_cluster.tsv
 
 output_prefix: test
 
