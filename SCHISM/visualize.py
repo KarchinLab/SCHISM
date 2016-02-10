@@ -3,6 +3,10 @@ import sys
 import numpy as np
 
 from utils import Config
+
+from HT import Sample
+from HT import read_input_samples
+from HT import read_cluster_assignments
 #----------------------------------------------------------------------#
 def plot_cpov(args):
     
@@ -369,3 +373,112 @@ def get_tree_stats(path):
                   content)
     
     return treeStats
+
+def plot_mut_clust_cellularity(args):
+    # plot estimated cellularity for mutations and clusters 
+    # across samples
+    try:
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+    except:
+        print >>sys.stderr, \
+            'Plotting mutation/cluster cellularities requires matplotlib \n' +\
+            'module. Failed to import matplotlib. Please install \n'+\
+            'matplotlib package and try again'
+        return
+    config = Config(args.config_file)
+    #--------------------------------------
+    # figure out path to input data files
+    if config.cellularity_estimation == 'schism':
+        mutCellularityPath = os.path.join(config.working_dir,\
+                                  config.output_prefix + '.mutation.cellularity')
+    else:
+        mutCellularityPath = os.path.join(config.working_dir,\
+                                    config.mutation_cellularity_input)
+    
+    clustCellularityPath = os.path.join(config.working_dir,\
+                                   config.output_prefix + '.cluster.cellularity')
+    clusterPath = os.path.join(config.working_dir, \
+                               config.mutation_to_cluster_assignment)
+    cluster2mut = read_cluster_assignments(clusterPath)
+    #--------------------------------------
+    # read in cluster cellularity data
+    cl2index, samples = read_input_samples(clustCellularityPath)
+    clBounds = {}
+    samples = sorted(samples, key = lambda x: x.name)
+    x = range(len(samples))
+    # generate serial information each cluster
+    for cl in cl2index.keys():
+        lowerBound = ['NA'] * len(samples)
+        upperBound = ['NA'] * len(samples)
+        for id, sample in enumerate(samples):
+            if sample.mutCellularity[cl2index[cl]] != -1:
+                lowerBound[id] = sample.mutCellularity[cl2index[cl]] - \
+                    sample.mutSigma[cl2index[cl]]
+                upperBound[id] = sample.mutCellularity[cl2index[cl]] + \
+                    sample.mutSigma[cl2index[cl]]
+            else:
+                pass
+        clBounds[cl] = [x, lowerBound, upperBound]
+    
+    # visualize cluster cellularity estimates and standard error
+    # as ribbon plot
+    colorPalette = ["#E62E41", "#0A893D", "#455593", "#F19131", \
+                        "#F375A0", "#874B2C", "#C894F1", "#C3401E", "#91430F", "#F65348"]
+    if len(cl2index) > len(colorPalette):
+        print >>sys.stderr, 'Cellularity plot not supported for more than 8 clusters.'
+        sys.exit()
+    plt.grid(True)
+    fig, ax = plt.subplots(1,1)
+    for cl, index in cl2index.items():
+        trace = np.mean(np.array([clBounds[cl][1], clBounds[cl][2]]), 0)
+        trace = map(bound_fix, trace)
+        
+        clBounds[cl][1] = map(bound_fix, clBounds[cl][1])
+        clBounds[cl][2] = map(bound_fix, clBounds[cl][2])    
+    
+        ax.fill_between(clBounds[cl][0], \
+                        clBounds[cl][1], \
+                        clBounds[cl][2], color = colorPalette[index], \
+                        alpha = 0.5)
+        ax.plot(clBounds[cl][0], list(trace), \
+                       color = colorPalette[index], label = cl, \
+                       linestyle="dotted", marker="o", linewidth = 1)
+    #-----------------------------------------#
+    # visualize cluster cellularity for individual mutations as 
+    # scatter plot overlay
+    mut2index, samples = read_input_samples(mutCellularityPath)
+    samples = sorted(samples, key = lambda x: x.name)
+    for cl in cluster2mut:
+        coords = []
+        for mut in cluster2mut[cl]:
+            xm = range(len(samples))
+            ym = [sample.mutCellularity[mut2index[mut]] \
+                                                for sample in samples]
+            coords.extend(zip(xm,ym))
+
+        coords = filter(lambda x: x[1] != -1, coords)
+        ax.scatter(zip(*coords)[0], zip(*coords)[1], color = colorPalette[cl2index[cl]],\
+                       marker = '+', s = 20.0)
+    #-----------------------------------------#
+    # adjust visual properties of the plot
+    handles, labels = ax.get_legend_handles_labels()
+    handles, labels = zip(*sorted(zip(handles, labels), key = lambda x: x[1]))
+    ax.legend(handles, labels)
+    
+    plt.xticks(range(len(samples)))
+    plt.yticks([x * 0.1 for x in range(11)])
+
+    plt.xlim((-0.5,2.5))
+    plt.ylim((-0.1,1.1))
+
+    xtext = [sample.name for sample in samples]
+    ax.set_xticklabels(xtext)
+
+    plt.gca().yaxis.grid(True)
+    outputPath = os.path.join(config.working_dir, \
+                              config.output_prefix +'.cellularity.png')
+    return
+
+
