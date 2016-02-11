@@ -27,7 +27,7 @@ cellularity_estimation: schism
 # only necessary if using SCHISM to estimte cellularity
 cellularity_estimator:
   coverage_threshold: 50.0
-  absent_mode: 1
+  absent_mode: 2
 
 # only necessary if using SCHISM to estimte cellularity
 tumor_sample_purity:
