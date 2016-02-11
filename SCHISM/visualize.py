@@ -17,7 +17,7 @@ def plot_cpov(args):
         from matplotlib.colors import LinearSegmentedColormap
     except ImportError:
         print >>sys.stderr, \
-            'Plotting consensus tree requires matplotlib \n' +\
+            'Plotting cpov matrix requires matplotlib \n' +\
             'module. Failed to import matplotlib. Please install \n'+\
             'matplotlib package and try again'
         return
@@ -89,6 +89,84 @@ def plot_cpov(args):
     cpovFigure = os.path.join(config.working_dir,\
                               config.output_prefix + '.HT.cpov.pdf')
     fig.savefig(cpovFigure, dpi = 300)
+#----------------------------------------------------------------------#
+def plot_pov(args):
+    try:
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+        from matplotlib.colors import LinearSegmentedColormap
+    except ImportError:
+        print >>sys.stderr, \
+            'Plotting pov matrix requires matplotlib \n' +\
+            'module. Failed to import matplotlib. Please install \n'+\
+            'matplotlib package and try again'
+        return
+
+    config = Config(args.config_file)
+    povPath = os.path.join(config.working_dir,\
+                            config.output_prefix +'.HT.pov')
+    pov, mutIDs = read_cpov_matrix(povPath)
+    
+    pov, mutIDs = reorder_pov_by_cluster(pov, mutIDs, config)
+
+    N = pov.shape[1]
+
+    # block out diagonal elements as they are meaningless
+    # when it comes to cluster pair topology costs
+    for index in range(N): pov[index, index] = 100
+    
+    width = min(7 , 1.5 * N)
+    
+    fig, ax = plt.subplots()
+    
+    # generate colormap that resembles ggplot2 mutedBlue
+    # colormap (scale_fill_gradient2 colors)
+    cdict1 = {'red':((0.0, 0.226, 0.226),
+                     (1.0, 1.0,1.0)),
+              'blue': ((0.0, 0.593, 0.593),
+                       (1.0, 1.0, 1.0)),
+               'green': ((0.0,0.226, 0.226),
+                         (1.0, 1.0, 1.0))}
+
+    mutedBlue = LinearSegmentedColormap('mutedBlue', cdict1)
+    plt.register_cmap(cmap=mutedBlue)
+    cmap = mutedBlue
+    cmap.set_over('0.72')
+    
+    # generate heatmap
+    heatmap = ax.pcolor(pov, cmap = mutedBlue ,\
+                        vmax = 1.0, vmin = -0.05,\
+                        edgecolors = [0.4,0.4,0.4])
+    
+    ax.set_xticks(np.arange(N) + 0.5, minor = False)
+    ax.set_yticks(np.arange(N) + 0.5, minor = False)
+
+    ax.set_xticklabels(mutIDs)
+    ax.set_yticklabels(mutIDs)
+
+    # add labels to heatmap
+    # for y in range(N):
+#         for x in range(N):
+#             # elements in pov matrix are binary
+#             plt.text(x + 0.5, y + 0.5, '%d' % pov[y, x],
+#                      horizontalalignment='center',
+#                      verticalalignment='center',)
+
+    ax.set_xlim([0,N])
+    ax.set_ylim([0,N])
+
+    ax.invert_yaxis()
+    ax.xaxis.tick_top()
+    
+    plt.setp(ax.xaxis.get_majorticklabels(), rotation = 90)
+
+    fig = plt.gcf()
+    fig.set_size_inches(width, width)
+    
+    povFigure = os.path.join(config.working_dir,\
+                              config.output_prefix + '.HT.pov.pdf')
+    fig.savefig(povFigure, dpi = 300)
 #----------------------------------------------------------------------#
 def plot_ga_fitness_trace(args):
     # plot the GA trace corresponding to the run(s) specified
@@ -373,7 +451,10 @@ def get_tree_stats(path):
                   content)
     
     return treeStats
-
+#----------------------------------------------------------------------#
+def bound_fix(value):
+    return min(max(value,0.0),1.0)
+#----------------------------------------------------------------------#
 def plot_mut_clust_cellularity(args):
     # plot estimated cellularity for mutations and clusters 
     # across samples
@@ -479,6 +560,38 @@ def plot_mut_clust_cellularity(args):
     plt.gca().yaxis.grid(True)
     outputPath = os.path.join(config.working_dir, \
                               config.output_prefix +'.cellularity.png')
+    plt.savefig(outputPath)
     return
 
+#----------------------------------------------------------------------#
+def reorder_pov_by_cluster(pov, mutIDs, config):
+    # reorder rows and columns of pov matrix
+    # to put mutations assigned to common clusters next to 
+    # each other
+    clusterPath = os.path.join(config.working_dir, \
+                               config.mutation_to_cluster_assignment)
+    if not os.path.exists(clusterPath):
+        # if no cluster assignment available
+        # return the matrix and ids as is
+        return pov, mutIDs
+    
+    cluster2mut = read_cluster_assignments(clusterPath)
+    pairs = []
+    for cl in cluster2mut:
+        pairs.extend(zip(cluster2mut[cl], [cl] * len(cluster2mut[cl])))
+    print pairs
+    pairs = sorted(pairs, key = lambda x: x[1])
+    print pairs
 
+    sortedmutIDs = zip(*pairs)[0]
+    print sortedmutIDs
+
+    sortedPov = np.zeros(pov.shape)
+    for pnID in sortedmutIDs:
+        for cnID in sortedmutIDs:
+            sortedPov[sortedmutIDs.index(pnID), sortedmutIDs.index(cnID)] = pov[mutIDs.index(pnID), \
+                                                                                    mutIDs.index(cnID)]
+    return sortedPov, sortedmutIDs
+#----------------------------------------------------------------------#
+
+    

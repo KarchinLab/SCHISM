@@ -98,6 +98,7 @@ def ap_cluster_avm(config, aVoteMatrix):
         print >>sys.stderr, 'Clustering mutations by application of affinity propagation to POV matrix'
 
     N = aVoteMatrix.shape[0]
+    maxClusterCount = min(N, maxClusterCount)
 
     # potentially improve this section
     prefs = range(prefMin, prefMax, inc)
@@ -170,6 +171,7 @@ def dbscan_cluster_avm(config, aVoteMatrix):
         print >>sys.stderr, 'Clustering mutations by application of DBSCAN to POV matrix'
 
     N = aVoteMatrix.shape[0]
+    maxClusterCount = min(N, maxClusterCount)
 
     # grid search over possible values for minPts, and eps to find 
     # a solution with highest silhouette coefficient
@@ -241,6 +243,7 @@ def kmeans_cluster_avm(config, aVoteMatrix):
         print >>sys.stderr, 'Clustering mutations by application of KMeans method to POV matrix'
 
     N = aVoteMatrix.shape[0]
+    maxClusterCount = min(N, maxClusterCount)
 
     # potentially improve this section
     cl_count = range(minClusterCount, maxClusterCount+1)

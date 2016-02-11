@@ -76,7 +76,20 @@ def generate_cellularity_file(mutData, purity, cellularityPath, coverageThreshol
                     print >>f_w, '\t'.join([sample, element[0], '%0.4f'%0.0,\
                                             '%0.4f'%0.05])
                     continue
-                else:
+                if absentMode == 2:
+                    cellularity = 0.0
+                    # only pseudo counts in estimating sd, not vaf
+                    # handle gain sd estimation 
+                    vaf = (element[2]+1)/(element[1] + element[2]+2)
+                    if element[3] >= 2:
+                        noiseSd = np.sqrt(((2/p)**2)*vaf*(1-vaf)/(element[1] + element[2] + 2))
+                    else:
+                        noiseSd = np.sqrt((((2-p)/p)**2) *vaf*(1-vaf)/(element[1] + element[2]+2))
+                    
+                    print >>f_w, '\t'.join([sample, element[0], '%0.4f'%cellularity,\
+                                            '%0.4f'%noiseSd])
+                    continue
+                if absentMode == 0:
                     # assign a pseudo count of 1 to reference and alternate reads 
                     element[1] += 1.0
                     element[2] += 1.0

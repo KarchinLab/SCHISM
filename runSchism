@@ -20,6 +20,7 @@ from SCHISM.GA import ga_summary
 from SCHISM.GA import generate_consensus_tree
 
 from SCHISM.visualize import plot_cpov
+from SCHISM.visualize import plot_pov
 from SCHISM.visualize import plot_mut_clust_cellularity
 
 from SCHISM.utils import Config
@@ -76,6 +77,12 @@ class CMDParser():
         viz_parser.add_argument('-c','--config_file',\
                         help = 'path to SCHISM configuration file')
         viz_parser.set_defaults(func = plot_cpov)
+        #----------------------------------------------------#
+        pviz_parser = subparsers.add_parser('plot_pov',\
+                         help = 'plot POV heatmap')
+        pviz_parser.add_argument('-c','--config_file',\
+                        help = 'path to SCHISM configuration file')
+        pviz_parser.set_defaults(func = plot_pov)
         #----------------------------------------------------#
         clv_parser = subparsers.add_parser('plot_cellularity',\
                          help = 'plot mutation and cluster cellularities')
