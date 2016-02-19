@@ -5,6 +5,10 @@
 # This path will be used as the base for relative paths
 # elsewhere in this file. Please configure accordingly.
 
+# Please keep in mind that in yaml format, there is a 
+# requirement for a space character (' ') between ':' and 
+# what proceeds it.
+
 working_dir: ~/SCHISM/example/Test
 
 # If using SCHISM for cellularity estimation
