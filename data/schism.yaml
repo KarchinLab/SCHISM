@@ -28,12 +28,12 @@ output_prefix: test
 #-----------Mutation Cellularity Estimation---------------#
 cellularity_estimation: schism
 
-# only necessary if using SCHISM to estimte cellularity
+# only necessary if using SCHISM to estimate cellularity
 cellularity_estimator:
   coverage_threshold: 50.0
   absent_mode: 2
 
-# only necessary if using SCHISM to estimte cellularity
+# only necessary if using SCHISM to estimate cellularity
 tumor_sample_purity:
   REL: 0.845
   TUM: 0.937
@@ -62,7 +62,8 @@ genetic_algorithm:
 #---------------------Cluster Analysis--------------------#
 # Optional block, when mutation to cluster assignment is 
 # not known apriori. One of the following algorithm (A, B, or C)
-# blocks can be used
+# blocks can be used. Please comment out ore remove the remaining
+# two.
 
 # required line for this setting
 cluster_analysis: schism
