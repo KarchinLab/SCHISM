@@ -27,7 +27,7 @@ If you use SCHISM in your research, please cite:
 
 ## Availability
 Stable releases of SCHISM are available from KarchinLab website at 
- * <http://karchinlab.org/apps/appSchism> 
+ * <http://karchinlab.org/apps/appSchism.html> 
  * <https://github.com/Niknafs/SCHISM/releases>
 
 ## Platform
