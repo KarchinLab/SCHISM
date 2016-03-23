@@ -51,7 +51,7 @@ Availability
 ===========
 
 Stable releases of SCHISM are available from KarchinLab website. 
-http://karchinlab.org/apps/appSchism
+http://karchinlab.org/apps/appSchism.html
 and also
 https://github.com/Niknafs/SCHISM/releases
 
