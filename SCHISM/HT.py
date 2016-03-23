@@ -70,7 +70,7 @@ def prep_hypothesis_test(args):
         
         clusterCellularityPath = os.path.join(config.working_dir,\
                                    config.output_prefix + '.cluster.cellularity')
-        if (not(hasattr(config, 'cluster_analysis')))   or config.cluster_analaysis != 'schism':
+        if (not(hasattr(config, 'cluster_analysis')))   or config.cluster_analysis != 'schism':
             # assumes cluster definitions are provided by the user through config file
             average_cellularity(config,clusterCellularityPath)
 #----------------------------------------------------------------------#
