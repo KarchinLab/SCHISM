@@ -36,6 +36,7 @@ Releases
     SCHISM-1.0.1    2016-01-01    Minor visualization update. Citation updated. 
     SCHISM-1.1.0    2016-01-26    Mutation clustering module added.
     SCHISM-1.1.1    2016-02-19    POV matrix visualization, Mutation/Cluster cellularity visualization added.
+    SCHISM-1.1.2    2016-05-11	  better color handling in cluster cellularity plots, addition of docker file
 
 Citation
 ===========

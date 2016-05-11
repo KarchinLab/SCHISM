@@ -505,10 +505,15 @@ def plot_mut_clust_cellularity(args):
     
     # visualize cluster cellularity estimates and standard error
     # as ribbon plot
-    colorPalette = ["#E62E41", "#0A893D", "#455593", "#F19131", \
-                        "#F375A0", "#874B2C", "#C894F1", "#C3401E", "#91430F", "#F65348"]
+    #colorPalette = ["#E62E41", "#0A893D", "#455593", "#F19131", \
+    #                    "#F375A0", "#874B2C", "#C894F1", "#C3401E", "#91430F", "#F65348"]
+    # modified color palette
+    colorPalette = ['#323f7b', '#cb3245', '#638e4d', '#9a336d', '#e2a86a',\
+                    '246c8f', '#7d303d', '#734d85', '#077783', '#9c7688',\
+                    'b48b73', '#7da1bf', '#4b6b6c', '#7b7282', '#263246']
+
     if len(cl2index) > len(colorPalette):
-        print >>sys.stderr, 'Cellularity plot not supported for more than 8 clusters.'
+        print >>sys.stderr, 'Cellularity plot not supported for more than 15 clusters.'
         sys.exit()
     plt.grid(True)
     fig, ax = plt.subplots(1,1)

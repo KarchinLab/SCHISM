@@ -19,6 +19,8 @@ Next, an implementation of genetic algorithm (GA) based on a fitness function th
 * SCHISM-1.0.1&nbsp;&nbsp;&nbsp;&nbsp;2016-01-01&nbsp;&nbsp;&nbsp;&nbsp;Minor visualization update. Citation info updated.
 * SCHISM-1.1.0&nbsp;&nbsp;&nbsp;&nbsp;2016-01-26&nbsp;&nbsp;&nbsp;&nbsp;Mutation clustering module added.
 * SCHISM-1.1.1&nbsp;&nbsp;&nbsp;&nbsp;2016-02-19&nbsp;&nbsp;&nbsp;&nbsp;POV matrix visualization, Mutation/Cluster cellularity visualization added.
+* SCHISM-1.1.2&nbsp;&nbsp;&nbsp;&nbsp;2016-05-11&nbsp;&nbsp;&nbsp;&nbsp;better color handling in cluster cellularity plots, addition of docker file
+
 ## Citation
 
 If you use SCHISM in your research, please cite:

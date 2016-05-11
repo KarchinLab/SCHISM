@@ -7,4 +7,8 @@ v1.1.0, 2015-01-26 --mutation clustering module added
 v1.1.1, 2016-02-19 -- Addition of POV matrix visualization
                    -- Addition of mutation/cluster cellularity (cellular fraction) visualization
 		   -- Cellularity estimation with `absent_mode: 2` with addition of pseudo counts to estimate standard deviation of mutation cellularity with 0 variant read counts
-		   --Better error handling in HT.py 
+		   -- Better error handling in HT.py 
+
+v1.1.2, 2016-05-11 -- Better color handling for cluster cellularity plots
+		   -- addition of docker build file
+		   
