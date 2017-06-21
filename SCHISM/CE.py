@@ -8,12 +8,11 @@ from utils import Config
 #----------------------------------------------------------------------#
 def read_mutation_counts(path):
     f_h = file(path, 'r')
-    
     expectedColumns = ['sampleID', 'mutationID', 'referenceReads', \
                        'variantReads', 'copyNumber']
 
     # check the header line is present as expected
-    if f_h.readline().strip().split('\t') != expectedColumns:
+    if f_h.readline().strip().split('\t')[:5] != expectedColumns:
         print >>sys.stderr, 'Invalid column Headers in mutation read count input.' +\
                             'Cellularity estimation failed'
         print >>sys.stderr, 'Expected columns are:\n %s'%\
@@ -25,7 +24,7 @@ def read_mutation_counts(path):
                                                   f_h.read().split('\n')))
 
     # confirm that the correct number of entries present in all lines
-    if list(set(map(len,content))) != [5]:
+    if list(set(map(len,content))) not in [[5],[6]]:
         print >>sys.stderr, 'Invalid number of columns present in '+\
             ' mutation read count input. Cellularity estimation failed'
         sys.exit()
@@ -46,7 +45,7 @@ def read_mutation_counts(path):
                 samples[0] + ' and ' + sample
             print >>sys.stderr, 'Cellularity estimation failed'
             sys.exit()
-    
+
     return sampleMuts
 #----------------------------------------------------------------------#
 def generate_cellularity_file(mutData, purity, cellularityPath, coverageThreshold,\
@@ -122,6 +121,72 @@ def generate_cellularity_file(mutData, purity, cellularityPath, coverageThreshol
                 sys.exit()
 
     f_w.close()
+#----------------------------------------------------------------------#
+def generate_cellularity_file_mult(mutData, purity, cellularityPath, coverageThreshold,\
+                              absentMode):
+
+    f_w = file(cellularityPath, 'w')
+    
+    print >>f_w, '\t'.join(['sampleID','mutationID','cellularity','sd'])
+
+    for sample in mutData.keys():
+        p = purity[sample]
+
+        for element in mutData[sample]:
+            # mutations outside diploid or hemizygous regions
+            # if element[3] not in [1,2]:
+            #     print >>f_w, '\t'.join([sample, element[0], 'NA', 'NA'])
+            #    continue
+
+            # mutation with insufficient coverage
+            if (element[1] + element[2]) < coverageThreshold:
+                print >>f_w, '\t'.join([sample, element[0], 'NA', 'NA'])
+                continue
+            
+            # handling zero read counts for alternate allele
+            if element[2] == 0.0:
+                if absentMode == 1:
+                    # assign cellularity of 0.0 to mutation
+                    # with standard error of 0.05
+                    print >>f_w, '\t'.join([sample, element[0], '%0.4f'%0.0,\
+                                            '%0.4f'%0.05])
+                    continue
+                if absentMode == 2:
+                    cellularity = 0.0
+                    # only pseudo counts in estimating sd, not vaf
+                    # handle gain sd estimation 
+                    vaf = (element[2]+1)/(element[1] + element[2]+2)
+                    if element[3] >= 2:
+                        noiseSd = np.sqrt(((2/p)**2)*vaf*(1-vaf)/(element[1] + element[2] + 2))
+                    else:
+                        noiseSd = np.sqrt((((2-p)/p)**2) *vaf*(1-vaf)/(element[1] + element[2]+2))
+                    
+                    print >>f_w, '\t'.join([sample, element[0], '%0.4f'%cellularity,\
+                                            '%0.4f'%noiseSd])
+                    continue
+                if absentMode == 0:
+                    # assign a pseudo count of 1 to reference and alternate reads 
+                    element[1] += 1.0
+                    element[2] += 1.0
+
+            # handling zero read counts for reference allele
+            if element[1] == 0.0:
+                element[1] += 1.0
+                element[2] += 1.0
+            
+            # modified cellularity calculation for user-provided multiplicity level
+            multiplicity = element[4]
+            total_cn = p * element[3] + (1-p) * 2
+            coverage = element[1] + element[2]
+            vaf = element[2]/(element[1] + element[2])
+            cellularity = min(1, (total_cn * vaf) / (p * multiplicity))
+            noiseSd = total_cn / (multiplicity * p) * np.sqrt(vaf * (1-vaf) / coverage)
+            print >>f_w, '\t'.join([sample, element[0], '%0.4f'%cellularity,\
+                                        '%0.4f'%noiseSd])
+            
+
+    f_w.close()
+
 #----------------------------------------------------------------------#
 def floatField(x):
     # intelligent string to float conversion 

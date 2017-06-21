@@ -8,6 +8,7 @@ from scipy.misc import comb as choose
 
 from CE import read_mutation_counts
 from CE import generate_cellularity_file
+from CE import generate_cellularity_file_mult
 
 from utils import Config
 
@@ -58,11 +59,23 @@ def prep_hypothesis_test(args):
                                    config.output_prefix + '.mutation.cellularity')
         clusterCellularityPath = os.path.join(config.working_dir,\
                                    config.output_prefix + '.cluster.cellularity')
-
-        generate_cellularity_file(mutData, purity, mutCellularityPath,\
-                                  config.cellularity_estimator['coverage_threshold'],\
-                                  config.cellularity_estimator['absent_mode'])
+        # no multiplicity provided
+        if len(mutData.values()[0][0]) == 4:
+            generate_cellularity_file(mutData, purity, mutCellularityPath,\
+                                      config.cellularity_estimator['coverage_threshold'],\
+                                      config.cellularity_estimator['absent_mode'])
+            
+        # multiplicity provided
+        if len(mutData.values()[0][0]) == 5:
+            generate_cellularity_file_mult(mutData, purity, mutCellularityPath,\
+                                           config.cellularity_estimator['coverage_threshold'],\
+                                           config.cellularity_estimator['absent_mode'])
         
+
+
+
+
+
         if (not(hasattr(config, 'cluster_analysis')))  or config.cluster_analysis != 'schism':
             # assumes cluster definitions are provided by the user through config file
             average_cellularity(config,clusterCellularityPath)
