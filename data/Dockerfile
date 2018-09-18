@@ -55,7 +55,7 @@ RUN git clone https://github.com/KarchinLab/SCHISM.git
 WORKDIR /SCHISM/
 RUN cat setup.py 
 RUN python setup.py sdist
-RUN pip install dist/SCHISM-1.1.1.tar.gz
+RUN pip install dist/SCHISM-1.1.3.tar.gz
 
 ENV LD_LIBRARY_PATH /usr/local/lib/
 
