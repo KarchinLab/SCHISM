@@ -1,0 +1,16 @@
+name: schism-orig
+channels:
+  - bioconda
+  - conda-forge
+  - r
+dependencies: 
+  - cairocffi
+  - igraph
+  - matplotlib
+  - numpy
+  - pycairo
+  - python=2.7.5
+  - python-igraph
+  - pyyaml
+  - scikit-learn
+  - scipy
