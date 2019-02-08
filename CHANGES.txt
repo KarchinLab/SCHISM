@@ -1,14 +1,16 @@
 v1.0.0, 2015-03-05 --initial release
 v1.0.1, 2015-01-01 --minor updates
-		     - matplotlib backend specification
-		     - updated citation in README.txt file
+                   -- matplotlib backend specification
+                   -- updated citation in README.txt file
 		     
-v1.1.0, 2015-01-26 --mutation clustering module added
+v1.1.0, 2015-01-26 -- Mutation clustering module added
+
 v1.1.1, 2016-02-19 -- Addition of POV matrix visualization
                    -- Addition of mutation/cluster cellularity (cellular fraction) visualization
 		   -- Cellularity estimation with `absent_mode: 2` with addition of pseudo counts to estimate standard deviation of mutation cellularity with 0 variant read counts
 		   -- Better error handling in HT.py 
 
 v1.1.2, 2016-05-11 -- Better color handling for cluster cellularity plots
-		   -- addition of docker build file
-		   
+		   -- Addition of docker build file
+
+v1.1.3, 2017-06-21 -- Addition of cellularity estimation for mutations in aneuploid regions of the genome. This update extends the ability of the program to estimate mutation cellularity beyond those in regions which are copy neutral or harbor hemizygous loss.		   
