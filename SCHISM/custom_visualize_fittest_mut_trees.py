@@ -36,6 +36,16 @@ def get_fittest_trees(GA_trace):
 
     # narrow down the set of all topologies having maximum fitness sampled
     highestFitness = max(list(map(float,list(zip(*content))[4])))
+    
+    # throw error if max tree fitness is 0
+    try:
+        if highestFitness == 0:
+    	    raise ValueError
+    except ValueError:
+        print >> sys.stderr, \
+            'All trees have 0 fitness. Not plotting individual trees.'
+        sys.exit()
+
     fittestTrees = [x for x in content if float(x[4]) == highestFitness]
 
     return fittestTrees
@@ -139,7 +149,7 @@ def plot_fittest_mut_trees(args):
         # output tree file
         treename = args.case_id + '_tree' + str(i+1) + '_fitness' + str(round(float(fitness), 3))
         cTreeGraphPath = os.path.join(outpath, treename + '.pdf')
-        print("Generating plot for fittest tree", i, ":", cTreeGraphPath)
+        print "Generating plot for fittest tree " + i + " : " + cTreeGraphPath
 
         ## translate topology to reflect mutation names
         topology_transl = translate_topology(mutid_to_mut, topology)
