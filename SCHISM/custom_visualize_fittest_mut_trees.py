@@ -149,7 +149,7 @@ def plot_fittest_mut_trees(args):
         # output tree file
         treename = args.case_id + '_tree' + str(i+1) + '_fitness' + str(round(float(fitness), 3))
         cTreeGraphPath = os.path.join(outpath, treename + '.pdf')
-        print "Generating plot for fittest tree " + i + " : " + cTreeGraphPath
+        print "Generating plot for fittest tree " + str(i) + " : " + cTreeGraphPath
 
         ## translate topology to reflect mutation names
         topology_transl = translate_topology(mutid_to_mut, topology)
