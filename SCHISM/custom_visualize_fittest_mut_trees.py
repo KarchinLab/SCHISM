@@ -146,7 +146,7 @@ def plot_fittest_mut_trees(args):
         parent_child = [t.split('\t')[0:2] for t in get_consensus_edges([topology_transl])]
         
         ## write edgelist to file 
-        tree_tsv_out = os.path.join(outpath, treename + '.edges.tsv')
+        tree_tsv_out = os.path.join(outpath, treename + '_edges.tsv')
         write_edgelist(parent_child, tree_tsv_out)
 
         parents = [pair[0] for pair in parent_child]
@@ -156,8 +156,6 @@ def plot_fittest_mut_trees(args):
         vertex_labels = vertices
         vertex_colors = [get_vertex_color(vl, ['KRAS','GNAS']) for vl in vertex_labels]
 
-
-        treeType = "single"
         edges = parent_child
         
         plot_mut_tree(vertices, edges, vertex_labels, vertex_colors, cTreeGraphPath)
