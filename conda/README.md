@@ -6,7 +6,7 @@ Make sure you have [Conda](https://docs.anaconda.com/anaconda/install/) installe
 
 ## Setting up the Conda environment
 
-Create an environment for SCHISM using the provided environment yaml file.
+Create an environment for SCHISM using the provided [environment yaml file](https://github.com/KarchinLab/SCHISM/blob/master/schism-env-macos.yaml)
 
 ```
 conda env create -f schism-env-macos.yaml
