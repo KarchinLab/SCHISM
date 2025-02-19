@@ -5,9 +5,9 @@ import numpy as np
 from scipy.stats import norm, chi2
 from scipy.special import comb as choose  # Consider using: from scipy.special import comb as choose
 from typing import Tuple
-from CE import read_mutation_counts
-from CE import generate_cellularity_file
-from CE import generate_cellularity_file_mult
+from SCHISM.CE import read_mutation_counts
+from SCHISM.CE import generate_cellularity_file
+from SCHISM.CE import generate_cellularity_file_mult
 
 from utils import Config
 
