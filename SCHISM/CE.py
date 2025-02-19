@@ -3,7 +3,7 @@ import sys
 import numpy as np
 from typing import List, Dict, Any
 
-from utils import Config
+from SCHISM.utils import Config
 
 #----------------------------------------------------------------------#
 def floatField(x: str) -> float:

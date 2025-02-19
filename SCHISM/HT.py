@@ -9,7 +9,7 @@ from SCHISM.CE import read_mutation_counts
 from SCHISM.CE import generate_cellularity_file
 from SCHISM.CE import generate_cellularity_file_mult
 
-from utils import Config
+from SCHISM.utils import Config
 
 # A helper function to flatten a list of lists
 melt = lambda x: [subitem for item in x for subitem in item]
