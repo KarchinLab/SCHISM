@@ -4,9 +4,9 @@ import numpy as np
 
 from utils import Config
 
-from HT import Sample
-from HT import read_input_samples
-from HT import read_cluster_assignments
+from SCHISM.HT import Sample
+from SCHISM.HT import read_input_samples
+from SCHISM.HT import read_cluster_assignments
 
 #----------------------------------------------------------------------#
 def plot_cpov(args):

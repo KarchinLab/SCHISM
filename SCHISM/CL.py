@@ -6,8 +6,8 @@ from typing import Any, Dict, List, Tuple
 from sklearn.cluster import AffinityPropagation, DBSCAN, KMeans
 from sklearn import metrics
 
-from utils import Config
-from HT import aggregate_votes, average_cellularity, read_schism_decisions
+from SCHISM.utils import Config
+from SCHISM.HT import aggregate_votes, average_cellularity, read_schism_decisions
 
 #----------------------------------------------------------------------#
 def cluster_muts(args: Any) -> None:

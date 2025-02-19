@@ -10,7 +10,7 @@ import numpy as np
 from collections import Counter
 from itertools import combinations
 
-from Tree import Node
+from SCHISM.Tree import Node
 
 
 class GA:

@@ -3,10 +3,10 @@ import sys
 from collections import Counter
 from typing import Any, List
 
-from Tree import Node
-from utils import Config
-from visualize import plot_ga_fitness_trace, plot_ga_top_tree_count_trace, plot_consensus_tree
-from GATools import *  # assuming this imports GA, TopologyRules, MassRules, read_instance, get_consensus_edges
+from SCHISM.Tree import Node
+from SCHISM.utils import Config
+from SCHISM.visualize import plot_ga_fitness_trace, plot_ga_top_tree_count_trace, plot_consensus_tree
+from SCHISM.GATools import *  # assuming this imports GA, TopologyRules, MassRules, read_instance, get_consensus_edges
 
 #----------------------------------------------------------------------#
 def run_ga(args: Any) -> None:
