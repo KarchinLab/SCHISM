@@ -2,7 +2,7 @@ import os
 import sys
 import numpy as np
 
-from utils import Config
+from SCHISM.utils import Config
 
 from SCHISM.HT import Sample
 from SCHISM.HT import read_input_samples
