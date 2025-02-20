@@ -253,9 +253,17 @@ def plot_consensus_tree(args):
                                   config.output_prefix + '.GA.consensusTree.pdf')
 
     edges, weights, labels = read_consensus_tree(cTreePath)
+    #vertices = list(set(list(zip(*edges))[0] + list(zip(*edges))[1]))
+    #root = list(set(vertices) - set(list(zip(*edges))[1]))[0]
     vertices = list(set(list(zip(*edges))[0] + list(zip(*edges))[1]))
-    root = list(set(vertices) - set(list(zip(*edges))[1]))[0]
-        
+    edge_targets = list(zip(*edges))[1]
+    root_candidates = list(set(vertices) - set(edge_targets))
+
+    if not root_candidates:
+        raise ValueError("No valid root found: the set difference between vertices and edge targets is empty.")
+
+    root = root_candidates[0] 
+
     edges.append(('GL', root))
     weights.append(1.0)
     vertices.append('GL')
