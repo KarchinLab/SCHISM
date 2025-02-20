@@ -133,7 +133,7 @@ def ap_cluster_avm(config: Config, a_vote_matrix: np.ndarray) -> Tuple[np.ndarra
     # -------------Picking a reasonable solution-------------#
     try:
         possible_solutions = [x for x in scores if x[1] != 'NA']
-        possible_solutions = [x for x in possible_solutions if config.clustering_method['max_cluster_count'] >= x[2] >= config.clustering_method['min_cluster_count']]
+        possible_solutions = [x for x in possible_solutions if max_cluster_count >= x[2] >= min_cluster_count]
         max_s_coeff = max(zip(*possible_solutions)[1])
         # Find the maximum silhouette coefficient.
         top_solutions = [x for x in possible_solutions if x[1] == max_s_coeff]
@@ -203,7 +203,7 @@ def dbscan_cluster_avm(config: Config, a_vote_matrix: np.ndarray) -> Tuple[np.nd
     # -------------Picking a reasonable solution-------------#
     try:
         possible_solutions = [x for x in scores if x[2] != 'NA']
-        possible_solutions = [x for x in possible_solutions if config.clustering_method['max_cluster_count'] >= x[3] >= config.clustering_method['min_cluster_count']]
+        possible_solutions = [x for x in possible_solutions if max_cluster_count >= x[3] >= min_cluster_count]
 
         max_s_coeff = max(zip(*possible_solutions)[2])
         # Find the maximum silhouette coefficient.
@@ -269,7 +269,7 @@ def kmeans_cluster_avm(config: Config, a_vote_matrix: np.ndarray) -> Tuple[np.nd
     # -------------Picking a reasonable solution-------------#
     try:
         possible_solutions = [x for x in scores if x[1] != 'NA']
-        possible_solutions = [x for x in possible_solutions if config.clustering_method['max_cluster_count'] >= x[0] >= config.clustering_method['min_cluster_count']]
+        possible_solutions = [x for x in possible_solutions if max_cluster_count >= x[0] >= min_cluster_count]
 
         max_s_coeff = max(zip(*possible_solutions)[1])
         # Find the maximum silhouette coefficient.
