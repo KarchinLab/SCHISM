@@ -55,7 +55,8 @@ def integrate_cluster_metrics(args: Any) -> None:
 #----------------------------------------------------------------------#
 def augmented_vote_matrix(pov: List[Tuple[str, str, Any]]) -> Tuple[Dict[str, int], np.ndarray]:
     # Extract unique mutation IDs from the first column of pov.
-    mutIDs = list(set(zip(*pov)[0]))
+    columns = list(zip(*pov))
+    mutIDs = list(set(columns[0]))
     mut2index = {mut: idx for idx, mut in enumerate(mutIDs)}
     N = len(mutIDs)
     # Augmented votes matrix: each row equals the corresponding row in pov
