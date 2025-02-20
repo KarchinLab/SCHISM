@@ -134,7 +134,9 @@ def ap_cluster_avm(config: Config, a_vote_matrix: np.ndarray) -> Tuple[np.ndarra
     try:
         possible_solutions = [x for x in scores if x[1] != 'NA']
         possible_solutions = [x for x in possible_solutions if max_cluster_count >= x[2] >= min_cluster_count]
-        max_s_coeff = max(zip(*possible_solutions)[1])
+        
+        #max_s_coeff = max(zip(*possible_solutions)[1])
+        max_s_coeff = max(solution[1] for solution in possible_solutions)
         # Find the maximum silhouette coefficient.
         top_solutions = [x for x in possible_solutions if x[1] == max_s_coeff]
         # If multiple solutions tie, pick the one with the smallest cluster count.
@@ -205,7 +207,8 @@ def dbscan_cluster_avm(config: Config, a_vote_matrix: np.ndarray) -> Tuple[np.nd
         possible_solutions = [x for x in scores if x[2] != 'NA']
         possible_solutions = [x for x in possible_solutions if max_cluster_count >= x[3] >= min_cluster_count]
 
-        max_s_coeff = max(zip(*possible_solutions)[2])
+        #max_s_coeff = max(zip(*possible_solutions)[2])
+        max_s_coeff = max(solution[2] for solution in possible_solutions)
         # Find the maximum silhouette coefficient.
         top_solutions = [x for x in possible_solutions if x[2] == max_s_coeff]
         # If multiple solutions tie, pick the one with the smallest cluster count.
@@ -271,7 +274,8 @@ def kmeans_cluster_avm(config: Config, a_vote_matrix: np.ndarray) -> Tuple[np.nd
         possible_solutions = [x for x in scores if x[1] != 'NA']
         possible_solutions = [x for x in possible_solutions if max_cluster_count >= x[0] >= min_cluster_count]
 
-        max_s_coeff = max(zip(*possible_solutions)[1])
+        #max_s_coeff = max(zip(*possible_solutions)[1])
+        max_s_coeff = max(solution[1] for solution in possible_solutions)
         # Find the maximum silhouette coefficient.
         top_solutions = [x for x in possible_solutions if x[1] == max_s_coeff]
         # If multiple solutions tie, pick the one with the smallest cluster count.
