@@ -192,8 +192,9 @@ class GA:
                              'populationHighestFitness',
                              'populationMedianFitness']), file=f_w)
             
-            print('\n'.join(map('\t'.join, zip(*metrics_data))), file=f_w)
-            
+            #print('\n'.join(map('\t'.join, zip(*metrics_data))), file=f_w)
+            print('\n'.join(map(lambda row: '\t'.join(map(str, row)), zip(*metrics_data))), file=f_w)
+
             # store objects
             print('############################################################', file=f_w)
             print('Topology\tMassCost\tTopologyCost\tCost\tFitness\tappearances(generationID:count)', file=f_w)
