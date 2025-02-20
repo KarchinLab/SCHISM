@@ -416,7 +416,11 @@ def get_consensus_edges(nwkFittestTrees: List[str]) -> List[str]:
             Edges[edge] += 1
 
     # sort edges by value if they are numeric
-    clusterLabels = list(set(list(zip(*list(Edges.keys()))[0]) + list(zip(*list(Edges.keys()))[1])))
+    keys = list(Edges.keys())
+    zipped_keys = list(zip(*keys))
+    clusterLabels = list(set(list(zipped_keys[0]) + list(zipped_keys[1])))
+    #clusterLabels = list(set(list(zip(*list(Edges.keys()))[0]) + list(zip(*list(Edges.keys()))[1])))
+    
     # if cluster IDs are numeric, sort accordingly
     if sum([x.isdigit() for x in clusterLabels]) == len(clusterLabels):
         edgeKeys = sorted(Edges.keys(), key=lambda x: (int(x[0]), int(x[1])))
