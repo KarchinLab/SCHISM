@@ -429,7 +429,10 @@ def get_consensus_edges(nwkFittestTrees: List[str]) -> List[str]:
 
     # prepare to return edges labeled with frequency information
     for edge in edgeKeys:
-        cEdges.append('\t'.join(map(str, edge) +
-                                  [str(float(Edges[edge]) / N),
-                                   f"{Edges[edge]}/{N}"]))
+    #    cEdges.append('\t'.join(map(str, edge) +
+    #                              [str(float(Edges[edge]) / N),
+    #                               f"{Edges[edge]}/{N}"]))
+        cEdges.append('\t'.join(list(map(str, edge)) +
+                                [str(float(Edges[edge]) / N),
+                                f"{Edges[edge]}/{N}"]))
     return cEdges
