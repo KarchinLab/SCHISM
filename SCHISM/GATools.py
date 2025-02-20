@@ -305,8 +305,12 @@ class TopologyRules:
                 toks = line.strip().split('\t')
                 self.costDict[(toks[0], toks[1])] = float(toks[2])
 
-        self.clusterIDs = list(set(list(zip(*list(self.costDict.keys()))[0]) +
-                                    list(zip(*list(self.costDict.keys()))[1])))
+        keys = list(self.costDict.keys())
+        zipped_keys = list(zip(*keys))
+        self.clusterIDs = list(set(list(zipped_keys[0]) + list(zipped_keys[1])))
+
+        #self.clusterIDs = list(set(list(zip(*list(self.costDict.keys()))[0]) +
+        #                            list(zip(*list(self.costDict.keys()))[1])))
 
     #----------------------------------------------------------#
     def topology_cost(self, pairs: List[Tuple[str, str]]) -> float:
