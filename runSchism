@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #=========================================================================#
 import os
 import sys
@@ -25,126 +25,125 @@ from SCHISM.visualize import plot_mut_clust_cellularity
 
 from SCHISM.utils import Config
 #--------------------------------------------------------------------#
-class CMDParser():
+class CMDParser:
     # command line parser
-    usage  = '\n python schism.py --help\n'
+    usage = '\n python schism.py --help\n'
 
     def __init__(self):
-        parser = argument_parser(description = CMDParser.usage)
+        parser = argument_parser(description=CMDParser.usage)
         
-        parser.add_argument('--version',action ='version', version='curr_dev')
+        parser.add_argument('--version', action='version', version='curr_dev')
 
-        subparsers = parser.add_subparsers(dest = 'task',\
-                                           title = 'analysis_type',\
-                                           help = 'SCHISM analysis type')
+        subparsers = parser.add_subparsers(dest='task',
+                                           title='analysis_type',
+                                           help='SCHISM analysis type')
         
         # runner script executing steps in sequence
         #----------------------------------------------------#
-        runner_parser = subparsers.add_parser('analyze',\
-                                        help = 'run schism analysis steps in sequence')
-        runner_parser.add_argument('-c','--config_file',\
-                                   help = 'path to SCHISM configuration file')
-        runner_parser.set_defaults(func = run_schism)
+        runner_parser = subparsers.add_parser('analyze',
+                                              help='run schism analysis steps in sequence')
+        runner_parser.add_argument('-c', '--config_file',
+                                   help='path to SCHISM configuration file')
+        runner_parser.set_defaults(func=run_schism)
 
         # task specific subparsers
         #----------------------------------------------------#
-        pht_parser = subparsers.add_parser('prepare_for_hypothesis_test',\
-                                           help = 'prepare cellularity input for hypothesis test')
-        pht_parser.add_argument('-c','--config_file',\
-                        help = 'path to SCHISM configuration file')
-        pht_parser.set_defaults(func = prep_hypothesis_test)
+        pht_parser = subparsers.add_parser('prepare_for_hypothesis_test',
+                                           help='prepare cellularity input for hypothesis test')
+        pht_parser.add_argument('-c', '--config_file',
+                                help='path to SCHISM configuration file')
+        pht_parser.set_defaults(func=prep_hypothesis_test)
         #----------------------------------------------------#
-        ht_parser = subparsers.add_parser('hypothesis_test',\
-                                          help = 'Perform SCHISM hypothesis test')
-        ht_parser.add_argument('-c','--config_file',\
-                        help = 'path to SCHISM configuration file')
-        ht_parser.set_defaults(func = hypothesis_test)
+        ht_parser = subparsers.add_parser('hypothesis_test',
+                                          help='Perform SCHISM hypothesis test')
+        ht_parser.add_argument('-c', '--config_file',
+                               help='path to SCHISM configuration file')
+        ht_parser.set_defaults(func=hypothesis_test)
         #----------------------------------------------------#
-        cl_parser = subparsers.add_parser('cluster_mutations',\
-                                           help = 'cluster mutations based on their hypothesis test results')
-        cl_parser.add_argument('-c','--config_file',\
-                        help = 'path to SCHISM configuration file')
-        cl_parser.set_defaults(func = cluster_muts)
+        cl_parser = subparsers.add_parser('cluster_mutations',
+                                          help='cluster mutations based on their hypothesis test results')
+        cl_parser.add_argument('-c', '--config_file',
+                               help='path to SCHISM configuration file')
+        cl_parser.set_defaults(func=cluster_muts)
         #----------------------------------------------------#
-        icm_parser = subparsers.add_parser('confirm_clusters',\
-                                           help = 'integrate cluster metrics (cellularity, and HT) over confirmed cluster definitions')
-        icm_parser.add_argument('-c','--config_file',\
-                        help = 'path to SCHISM configuration file')
-        icm_parser.set_defaults(func = integrate_cluster_metrics)
+        icm_parser = subparsers.add_parser('confirm_clusters',
+                                           help='integrate cluster metrics (cellularity, and HT) over confirmed cluster definitions')
+        icm_parser.add_argument('-c', '--config_file',
+                                help='path to SCHISM configuration file')
+        icm_parser.set_defaults(func=integrate_cluster_metrics)
         #----------------------------------------------------#
-        viz_parser = subparsers.add_parser('plot_cpov',\
-                         help = 'plot CPOV heatmap')
-        viz_parser.add_argument('-c','--config_file',\
-                        help = 'path to SCHISM configuration file')
-        viz_parser.set_defaults(func = plot_cpov)
+        viz_parser = subparsers.add_parser('plot_cpov',
+                                           help='plot CPOV heatmap')
+        viz_parser.add_argument('-c', '--config_file',
+                                help='path to SCHISM configuration file')
+        viz_parser.set_defaults(func=plot_cpov)
         #----------------------------------------------------#
-        pviz_parser = subparsers.add_parser('plot_pov',\
-                         help = 'plot POV heatmap')
-        pviz_parser.add_argument('-c','--config_file',\
-                        help = 'path to SCHISM configuration file')
-        pviz_parser.set_defaults(func = plot_pov)
+        pviz_parser = subparsers.add_parser('plot_pov',
+                                            help='plot POV heatmap')
+        pviz_parser.add_argument('-c', '--config_file',
+                                 help='path to SCHISM configuration file')
+        pviz_parser.set_defaults(func=plot_pov)
         #----------------------------------------------------#
-        clv_parser = subparsers.add_parser('plot_cellularity',\
-                         help = 'plot mutation and cluster cellularities')
-        clv_parser.add_argument('-c','--config_file',\
-                        help = 'path to SCHISM configuration file')
-        clv_parser.set_defaults(func = plot_mut_clust_cellularity)
+        clv_parser = subparsers.add_parser('plot_cellularity',
+                                           help='plot mutation and cluster cellularities')
+        clv_parser.add_argument('-c', '--config_file',
+                                help='path to SCHISM configuration file')
+        clv_parser.set_defaults(func=plot_mut_clust_cellularity)
         #----------------------------------------------------#
-        ga_parser = subparsers.add_parser('run_ga',\
-                        help = 'run genetic algorithm')
-        ga_parser.add_argument('-m', '--mode',type= str,\
-                               help = 'GA run mode: serial or parallel')
-        ga_parser.add_argument('-r', '--runID',type= int,\
-                               help = 'GA run id to run')
-        ga_parser.add_argument('-c','--config_file',\
-                        help = 'path to SCHISM configuration file')
-        ga_parser.set_defaults(func = run_ga)
+        ga_parser = subparsers.add_parser('run_ga',
+                                          help='run genetic algorithm')
+        ga_parser.add_argument('-m', '--mode', type=str,
+                               help='GA run mode: serial or parallel')
+        ga_parser.add_argument('-r', '--runID', type=int,
+                               help='GA run id to run')
+        ga_parser.add_argument('-c', '--config_file',
+                               help='path to SCHISM configuration file')
+        ga_parser.set_defaults(func=run_ga)
         #----------------------------------------------------#
-        ga_summary_parser = subparsers.add_parser('summarize_ga_results',\
-                                       help='generate summary ga table and plots')
-        ga_summary_parser.add_argument('-c','--config_file',\
-                        help = 'path to SCHISM configuration file')
-        ga_summary_parser.set_defaults(func = ga_summary)
+        ga_summary_parser = subparsers.add_parser('summarize_ga_results',
+                                                  help='generate summary ga table and plots')
+        ga_summary_parser.add_argument('-c', '--config_file',
+                                       help='path to SCHISM configuration file')
+        ga_summary_parser.set_defaults(func=ga_summary)
         #----------------------------------------------------#
-        ct_parser = subparsers.add_parser('consensus_tree',\
-                        help = 'construct and plot consensus tree from the fittest')
-        ct_parser.add_argument('-c','--config_file',\
-                        help = 'path to SCHISM configuration file')
-        ct_parser.set_defaults(func = generate_consensus_tree)
+        ct_parser = subparsers.add_parser('consensus_tree',
+                                          help='construct and plot consensus tree from the fittest')
+        ct_parser.add_argument('-c', '--config_file',
+                               help='path to SCHISM configuration file')
+        ct_parser.set_defaults(func=generate_consensus_tree)
         #----------------------------------------------------#
         args = parser.parse_args()
         self.__dict__.update(args.__dict__)
-        return
+
 #--------------------------------------------------------------------#
 def run_schism(args):
     config = Config(args.config_file)
 
-    print >>sys.stderr, 'Preparing hypothesis test input...'
+    print('Preparing hypothesis test input...', file=sys.stderr)
     prep_hypothesis_test(args)
-    print >>sys.stderr, 'Performing hypothesis input...'
+    print('Performing hypothesis test...', file=sys.stderr)
     hypothesis_test(args)
 
     if hasattr(config, 'cluster_analysis') and config.cluster_analysis == 'schism':
-        print >>sys.stderr, 'clustering mutations...'
+        print('Clustering mutations...', file=sys.stderr)
         cluster_muts(args)
-        print >>sys.stderr, 'integrating cluster metrics ...'
+        print('Integrating cluster metrics ...', file=sys.stderr)
         integrate_cluster_metrics(args)
 
-    print >>sys.stderr, 'Visualizing test results...'
+    print('Visualizing test results...', file=sys.stderr)
     plot_cpov(args)
 
-    print >>sys.stderr, 'Visualizing mutation and cluster cellularity estimates ...'
+    print('Visualizing mutation and cluster cellularity estimates ...', file=sys.stderr)
     plot_mut_clust_cellularity(args)
 
     args.mode = 'serial'
-    print >>sys.stderr, 'Performing independent runs of' + \
-                        ' genetic algorithm in serial mode ...'
+    print('Performing independent runs of genetic algorithm in serial mode ...', file=sys.stderr)
     run_ga(args)
-    print >>sys.stderr, 'Merging results from independent GA runs' +\
-                        ' and generating summary plots...'
+    print('Merging results from independent GA runs and generating summary plots...', file=sys.stderr)
     ga_summary(args)
-    print >>sys.stderr, 'generating the consensus of maximum fitness trees'
+    print('Generating the consensus of maximum fitness trees', file=sys.stderr)
     generate_consensus_tree(args)
+
 #--------------------------------------------------------------------#
 def main():
     # call the appropriate function to carry out the selected task
@@ -153,4 +152,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
