@@ -9,7 +9,7 @@ dependencies:
   - matplotlib
   - numpy
   - pycairo
-  - python=2.7.5
+  - python=3.8
   - python-igraph
   - pyyaml
   - scikit-learn
